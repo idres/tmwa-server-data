@@ -101,7 +101,7 @@ L_Sages:
     mes "[Oskari]";
     mes "\"However, they live in different places all over Kaizei, but they meet sometimes to discuss differents matters. They work hard for the prosperity of this continent, trying to improve the living conditions by both political work and magical researches, with the aid of their helpers.\"";
     next;
-    mes "\"The politics on Kaizei are rather complicated, the Sages have great influence, but there are also other organziations and groups. Due to the harsh climate on this continent, villages or towns can be cut off the rest of the world for several weeks sometimes, so most of them tend to be rather independent.\"";
+    mes "\"The politics on Kaizei are rather complicated, the Sages have great influence, but there are also other organizations and groups. Due to the harsh climate on this continent, villages or towns can be cut off the rest of the world for several weeks sometimes, so most of them tend to be rather independent.\"";
     next;
     mes "\"Also there's the Order of Ice, an organization which represents the national interests of Kaizei in a rather narrow-minded way compared to the Sages.\"";
     goto L_Close;

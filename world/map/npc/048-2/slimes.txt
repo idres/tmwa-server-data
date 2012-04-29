@@ -262,8 +262,17 @@ L_ClearedPoint:
 048-2.gat,167,79,0|script|#Slime3|32767,2,2,{
     set @slimes, ((QUEST_BlueSage & $@Q_BlueSageSlimes_MASK) >> $@Q_BlueSageSlimes_SHIFT);
 
+    message strcharinfo(0), "----------------------";
+    message strcharinfo(0), "Stepped onto spawn point. @slimes " + @slimes;
+    message strcharinfo(0), "Active slimes: " + $@BlueSageSlime3_Spawn;
+
+    set @mobcount, mobcount("048-2.gat", "#Slime3::OnSlimeDeath");
+    message strcharinfo(0), "mobcount: " + @mobcount;
+
     if (mobcount("048-2.gat", "#Slime3::OnSlimeDeath") < 0) // returns -1 if no monsters
         set $@BlueSageSlime3_Spawn, 0;
+
+    message strcharinfo(0), "Active slimes: " + $@BlueSageSlime3_Spawn;
 
     // if finished or haven't started yet or spawn already active or spawn already done, do nothing
     if ((@slimes == 0) || ($@BlueSageSlime3_Spawn > 0) || (QUEST_BlueSage & $@Q_BlueSageSlime3))
@@ -271,6 +280,7 @@ L_ClearedPoint:
 
     set @spawnSlime3, 0;
     set @chance, rand(10);
+    message strcharinfo(0), "Dice rolled: " + @chance;
     if (@chance < 3)
         goto L_End;
     if (@chance < 4)
@@ -281,7 +291,7 @@ L_ClearedPoint:
     goto L_End;
 
 L_BlowUp:
-    percentheal -100, 0;
+ //  percentheal -100, 0;
     message strcharinfo(0), "A slime dripped out of a bookshelf right in front of you and stepped onto it. It exploded. That hurt.";
     goto L_End;
 
@@ -293,26 +303,33 @@ L_End:
 OnSpawn:
     if (attachrid($@Slime3VictimID) == 0)
         goto L_Clean;
+    message strcharinfo(0), "Spawning now.";
     set $@BlueSageSlime3_Spawn, $@BlueSageSlime3_Amount;
     areamonster "048-2.gat", 164, 76, 170, 82, "", 1093, $@BlueSageSlime3_Spawn, "#Slime3::OnSlimeDeath";
     end;
 
 OnSlimeDeath:
+    mapannounce "048-2.gat", "OnSlimeDeath", 0;
     set $@BlueSageSlime3_Spawn, $@BlueSageSlime3_Spawn - 1;
+    mapannounce "048-2.gat", "$@BlueSageSlime3_Spawn: " + $@BlueSageSlime3_Spawn, 0;
     if (mobcount("048-2.gat", "#Slime3::OnSlimeDeath") < 0) // returns -1 if no monsters
         set $@BlueSageSlime3_Spawn, 0;
 
     if ($@Slime3VictimID == getcharid(3))
         goto L_Count;
+    mapannounce "048-2.gat", "Not counting", 0;
     if ($@BlueSageSlime3_Spawn == 0)
         goto L_ClearedPoint;
+    mapannounce "048-2.gat", "Not cleared", 0;
     end;
 
 L_Clean:
+    mapannounce "048-2.gat", "L_Clean", 0;
     set $@Slime3VictimID, 0;
     end;
 
 L_Count:
+    message strcharinfo(0), "Counting now: " + @spawnSlime3;
     set @spawnSlime3, @spawnSlime3 + 1;
     if ($@BlueSageSlime3_Spawn == 0)
         goto L_ClearedPoint;
@@ -326,6 +343,7 @@ L_SlimesEscaped:
 L_ClearedPoint:
     if (attachrid($@Slime3VictimID) == 0)
         goto L_Clean;
+    message strcharinfo(0), "Cleared point. @spawnSlime3: " + @spawnSlime3;
     if (rand($@BlueSageSlime3_Amount - @spawnSlime3) != 0)
         goto L_SlimesEscaped;
     set QUEST_BlueSage, QUEST_BlueSage | $@Q_BlueSageSlime3;
@@ -508,8 +526,17 @@ L_ClearedPoint:
 048-2.gat,164,102,0|script|#Slime6|32767,2,2,{
     set @slimes, ((QUEST_BlueSage & $@Q_BlueSageSlimes_MASK) >> $@Q_BlueSageSlimes_SHIFT);
 
+    message strcharinfo(0), "----------------------";
+    message strcharinfo(0), "Stepped onto spawn point. @slimes " + @slimes;
+    message strcharinfo(0), "Active slimes: " + $@BlueSageSlime6_Spawn;
+
+    set @mobcount, mobcount("048-2.gat", "#Slime6::OnSlimeDeath");
+    message strcharinfo(0), "mobcount: " + @mobcount;
+
     if (mobcount("048-2.gat", "#Slime6::OnSlimeDeath") < 0) // returns -1 if no monsters
         set $@BlueSageSlime6_Spawn, 0;
+
+    message strcharinfo(0), "Active slimes: " + $@BlueSageSlime6_Spawn;
 
     // if finished or haven't started yet or spawn already active or spawn already done, do nothing
     if ((@slimes == 0) || ($@BlueSageSlime6_Spawn > 0) || (QUEST_BlueSage & $@Q_BlueSageSlime6))
@@ -517,6 +544,7 @@ L_ClearedPoint:
 
     set @spawnSlime6, 0;
     set @chance, rand(10);
+    message strcharinfo(0), "Dice rolled: " + @chance;
     if (@chance < 3)
         goto L_End;
     if (@chance < 4)
@@ -527,7 +555,7 @@ L_ClearedPoint:
     goto L_End;
 
 L_BlowUp:
-    percentheal -100, 0;
+  //  percentheal -100, 0;
     message strcharinfo(0), "A slime dripped out of a bookshelf right in front of you and stepped onto it. It exploded. That hurt.";
     goto L_End;
 
@@ -539,26 +567,33 @@ L_End:
 OnSpawn:
     if (attachrid($@Slime6VictimID) == 0)
         goto L_Clean;
+    message strcharinfo(0), "Spawning now.";
     set $@BlueSageSlime6_Spawn, $@BlueSageSlime6_Amount;
     areamonster "048-2.gat", 161, 99, 167, 105, "", 1091, $@BlueSageSlime6_Spawn, "#Slime6::OnSlimeDeath";
     end;
 
 OnSlimeDeath:
+    mapannounce "048-2.gat", "OnSlimeDeath", 0;
     set $@BlueSageSlime6_Spawn, $@BlueSageSlime6_Spawn - 1;
+    mapannounce "048-2.gat", "$@BlueSageSlime6_Spawn: " + $@BlueSageSlime6_Spawn, 0;
     if (mobcount("048-2.gat", "#Slime6::OnSlimeDeath") < 0) // returns -1 if no monsters
         set $@BlueSageSlime6_Spawn, 0;
 
     if ($@Slime6VictimID == getcharid(3))
         goto L_Count;
+    mapannounce "048-2.gat", "Not counting", 0;
     if ($@BlueSageSlime6_Spawn == 0)
         goto L_ClearedPoint;
+    mapannounce "048-2.gat", "Not cleared", 0;
     end;
 
 L_Clean:
+    mapannounce "048-2.gat", "L_Clean", 0;
     set $@Slime6VictimID, 0;
     end;
 
 L_Count:
+    message strcharinfo(0), "Counting now: " + @spawnSlime6;
     set @spawnSlime6, @spawnSlime6 + 1;
     if ($@BlueSageSlime6_Spawn == 0)
         goto L_ClearedPoint;
@@ -572,6 +607,7 @@ L_SlimesEscaped:
 L_ClearedPoint:
     if (attachrid($@Slime6VictimID) == 0)
         goto L_Clean;
+    message strcharinfo(0), "Cleared point. @spawnSlime6: " + @spawnSlime6;
     if (rand($@BlueSageSlime6_Amount - @spawnSlime6) != 0)
         goto L_SlimesEscaped;
     set QUEST_BlueSage, QUEST_BlueSage | $@Q_BlueSageSlime6;
